@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, SafeAreaView, ScrollView } from 'react-native'
 import React from 'react'
 
 const DataDemo = [
@@ -36,7 +36,7 @@ const Item = ({ item, onPress }) => (
       <Text style={{ fontSize: 14, fontWeight: '400' }}>{item.time}</Text>
     </View>
 
-    <View style={{marginVertical: 8}}>
+    <View style={{ marginVertical: 8 }}>
       {item.rate === 1 ?
         <View>
           <Image
@@ -132,49 +132,52 @@ const Item = ({ item, onPress }) => (
 );
 
 const Review = (props) => {
-  const {navigation} = props;
+  const { navigation } = props;
 
   return (
-    <View style={{ flex: 1, paddingTop: 50, backgroundColor: 'white', paddingHorizontal: 12 }}>
+    <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
+      <View style={{ flex: 1, paddingTop: 50, backgroundColor: 'white', paddingHorizontal: 12 }}>
 
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image
-            style={styles.iconTopBar}
-            resizeMode='cover'
-            source={require('../../../../assets/images/back2.png')} />
-        </TouchableOpacity>
-
-        <Text style={styles.textProfile}>Rating & Review</Text>
-        <View style={styles.iconTopBar}></View>
-      </View>
-
-      <View style={{ flexDirection: 'row', marginTop: 20, marginBottom: 20 }}>
-        <Image
-          style={styles.imgProduct}
-          resizeMode='cover'
-          source={require('../../../../assets/images/s23.jpg')} />
-        <View style={{ marginLeft: 12, justifyContent: 'space-between' }}>
-          <Text style={{ fontSize: 18, fontWeight: '600' }}>Samsung S20</Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <Image
-              style={styles.star}
+              style={styles.iconTopBar}
               resizeMode='cover'
-              source={require('../../../../assets/images/star.png')} />
-            <Text style={{ fontSize: 24, fontWeight: '700' }}>4.5</Text>
-          </View>
-          <Text style={{ fontSize: 14, fontWeight: '400' }}>10 Reviews</Text>
+              source={require('../../../../assets/images/back2.png')} />
+          </TouchableOpacity>
+
+          <Text style={styles.textProfile}>Rating & Review</Text>
+          <View style={styles.iconTopBar}></View>
         </View>
+
+        <View style={{ flexDirection: 'row', marginTop: 20, marginBottom: 20 }}>
+          <Image
+            style={styles.imgProduct}
+            resizeMode='cover'
+            source={require('../../../../assets/images/s23.jpg')} />
+          <View style={{ marginLeft: 12, justifyContent: 'space-between' }}>
+            <Text style={{ fontSize: 18, fontWeight: '600' }}>Samsung S20</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Image
+                style={styles.star}
+                resizeMode='cover'
+                source={require('../../../../assets/images/star.png')} />
+              <Text style={{ fontSize: 24, fontWeight: '700' }}>4.5</Text>
+            </View>
+            <Text style={{ fontSize: 14, fontWeight: '400' }}>10 Reviews</Text>
+          </View>
+        </View>
+
+        {
+          DataDemo.map((item) =>
+            <Item key={item._id} item={item} />
+          )
+        }
+
+
       </View>
+    </ScrollView>
 
-      {
-        DataDemo.map((item) =>
-          <Item key={item._id} item={item} />
-        )
-      }
-
-
-    </View>
   )
 }
 
@@ -200,11 +203,17 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     flexDirection: 'column',
-    marginTop: 20,
+    marginTop: 30,
     padding: 20,
-    elevation: 5,
+    backgroundColor: 'white',
     shadowColor: 'grey',
     borderRadius: 4,
+    shadowOffset: {
+      width: 1,
+      height: 3
+    },
+    shadowRadius: 5,
+    shadowOpacity: 0.3
   },
   itemRow: {
     flexDirection: 'row',
@@ -220,8 +229,8 @@ const styles = StyleSheet.create({
     width: 50, height: 50,
     borderRadius: 25,
     position: 'absolute',
-    top: -15,
-    left: Dimensions.get('window').width / 2 -40,
+    top: -25,
+    left: Dimensions.get('window').width / 2 - 40,
     flexDirection: 'row',
     justifyContent: 'center',
   }
